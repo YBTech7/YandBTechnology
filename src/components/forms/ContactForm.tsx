@@ -218,13 +218,15 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
                   ? 'This GitHub Pages site is static: consultation requests cannot be sent or saved here until a secure form backend is configured. Please do not enter sensitive information.'
                   : 'This environment validates submissions on the server, but external database persistence and email notifications are not yet configured. Submissions are not permanently delivered.'}
               </p>
+              {!isStaticPages && (
               <p className="text-xs text-[#6E5849] dark:text-[#D5C3B3]">
                 To enable live storage &amp; delivery, configure{' '}
                 <code className="font-mono-tabular px-1 py-0.5 rounded bg-[#4A372A]/10 dark:bg-[#1E1510]">
                   INQUIRY_WEBHOOK_URL
                 </code>{' '}
                 and SMTP environment variables per <code className="font-mono-tabular">.env.example</code>.
-              </p>}
+              </p>
+              )}
             </div>
           </div>
         </div>

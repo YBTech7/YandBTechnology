@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from './hooks/useTheme';
 import { MainLayout } from './components/layout/MainLayout';
 import { Home } from './pages/Home';
@@ -39,7 +39,7 @@ function PageLoader() {
 export default function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
+      <HashRouter>
         <MainLayout>
           <Suspense fallback={<PageLoader />}>
             <Routes>
@@ -62,7 +62,7 @@ export default function App() {
             </Routes>
           </Suspense>
         </MainLayout>
-      </BrowserRouter>
+      </HashRouter>
     </ThemeProvider>
   );
 }

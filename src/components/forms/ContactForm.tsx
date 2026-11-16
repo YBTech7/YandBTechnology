@@ -95,6 +95,7 @@ interface SubmitResponse {
 
 export function ContactForm({ defaultService }: { defaultService?: string }) {
   const [envStatus, setEnvStatus] = useState<EnvStatus | null>(null);
+  const isStaticPages = window.location.hostname.endsWith('.github.io');
   const [serverResult, setServerResult] = useState<SubmitResponse | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
 
@@ -128,6 +129,15 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
   });
 
   useEffect(() => {
+    if (isStaticPages) {
+      setEnvStatus({
+        mode: 'demonstration',
+        persistenceConfigured: false,
+        emailConfigured: false,
+        missingConfiguration: ['GitHub Pages does not run backend APIs'],
+      });
+      return;
+    }
     let active = true;
     fetch('/api/contact/status')
       .then((res) => (res.ok ? res.json() : null))
@@ -147,11 +157,15 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
     return () => {
       active = false;
     };
-  }, []);
+  }, [isStaticPages]);
 
   const onSubmit = async (values: ContactFormValues) => {
     setServerError(null);
     setServerResult(null);
+    if (isStaticPages) {
+      setServerError('Consultation submissions are not available on GitHub Pages until a backend form service is connected. Your information has not been sent.');
+      return;
+    }
 
     try {
       const response = await fetch('/api/contact', {
@@ -200,9 +214,9 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
                 Consultation Form — Server Validation &amp; Demonstration Mode
               </p>
               <p className="text-[#6E5849] dark:text-[#D5C3B3] leading-relaxed">
-                This environment validates submissions securely on the server, but external
-                database persistence and email notifications are not yet configured. Submissions
-                will verify cleanly without claiming permanent delivery.
+                {isStaticPages
+                  ? 'This GitHub Pages site is static: consultation requests cannot be sent or saved here until a secure form backend is configured. Please do not enter sensitive information.'
+                  : 'This environment validates submissions on the server, but external database persistence and email notifications are not yet configured. Submissions are not permanently delivered.'}
               </p>
               <p className="text-xs text-[#6E5849] dark:text-[#D5C3B3]">
                 To enable live storage &amp; delivery, configure{' '}
@@ -210,7 +224,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
                   INQUIRY_WEBHOOK_URL
                 </code>{' '}
                 and SMTP environment variables per <code className="font-mono-tabular">.env.example</code>.
-              </p>
+              </p>}
             </div>
           </div>
         </div>
@@ -496,7 +510,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
 
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || isStaticPages}
           className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg bg-[#916E55] hover:bg-[#74553F] dark:bg-[#D9BE9D] dark:hover:bg-[#E5D6CA] px-6 py-3 text-sm font-semibold text-[#FFF9F4] dark:text-[#1E1510] disabled:opacity-60 transition-colors min-h-[44px]"
         >
           {isSubmitting ? (
@@ -505,7 +519,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
               <span>Validating &amp; Submitting...</span>
             </>
           ) : (
-            <span>Submit Consultation Request</span>
+            <span>{isStaticPages ? 'Submissions unavailable — backend required' : 'Submit Consultation Request'}</span>
           )}
         </button>
       </form>

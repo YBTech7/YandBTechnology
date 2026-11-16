@@ -16,8 +16,8 @@ export const siteConfig = {
   currencySymbol: '₱',
   timezone: 'Asia/Manila',
   language: 'English',
-  logoPath: '/assets/aistudio/Official_Logo_b76e328d.png',
-  paletteAssetPath: '/assets/aistudio/Official_Color_Palette_d86e354c.png',
+  logoPath: `${import.meta.env.BASE_URL}assets/aistudio/Official_Logo_b76e328d.png`,
+  paletteAssetPath: `${import.meta.env.BASE_URL}assets/aistudio/Official_Color_Palette_d86e354c.png`,
 
   // Configuration placeholders — populate via environment or deployment config when provisioned
   corporateParticulars: {

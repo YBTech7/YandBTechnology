@@ -1,0 +1,92 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --yb-mocha: #916E55;
+  --yb-mocha-deep: #74553F;
+  --yb-champagne: #D9BE9D;
+  --yb-sand: #E5D6CA;
+  --yb-ivory: #FFF9F4;
+  --yb-espresso: #4A372A;
+  --yb-espresso-dark: #1E1510;
+  --yb-espresso-surface: #2B1F17;
+
+  --bg-canvas: #FFF9F4;
+  --bg-surface: #F7EFE7;
+  --bg-surface-elevated: #FFFFFF;
+  --bg-sand: #E5D6CA;
+  --text-primary: #4A372A;
+  --text-muted: #6E5849;
+  --border-subtle: rgba(74, 55, 42, 0.12);
+  --accent-primary: #916E55;
+  --accent-secondary: #D9BE9D;
+}
+
+.dark {
+  --bg-canvas: #1E1510;
+  --bg-surface: #281D16;
+  --bg-surface-elevated: #31241B;
+  --bg-sand: #3C2C22;
+  --text-primary: #FFF9F4;
+  --text-muted: #D5C3B3;
+  --border-subtle: rgba(217, 190, 157, 0.16);
+  --accent-primary: #D9BE9D;
+  --accent-secondary: #916E55;
+}
+
+@layer base {
+  html {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    scroll-behavior: smooth;
+    color: var(--text-primary);
+    background-color: var(--bg-canvas);
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    text-wrap: balance;
+  }
+
+  .font-mono-tabular {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid #916E55;
+    outline-offset: 2px;
+  }
+
+  .dark :focus-visible {
+    outline-color: #D9BE9D;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.yb-hero-gradient {
+  background: radial-gradient(circle at 72% 38%, rgba(145, 110, 85, 0.34) 0%, rgba(74, 55, 42, 0.92) 48%, #261B14 100%);
+}
+
+.yb-card-surface {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 10px 30px -18px rgba(74, 55, 42, 0.14);
+}
+
+.dark .yb-card-surface {
+  box-shadow: 0 12px 34px -18px rgba(0, 0, 0, 0.55);
+}

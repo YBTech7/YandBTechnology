@@ -1,0 +1,6 @@
+{
+  "name": "Y & B Technology",
+  "description": "Engineering Intelligence. Automating the Future. Official corporate website for Y & B Technology (Y&B Intelligence) — AI solutions, business process automation, systems integration, and Y&B IntelliFlow.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
